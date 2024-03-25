@@ -1,0 +1,170 @@
+/* reset css */
+*{
+    font-family: "Plus Jakarta Sans", sans-serif;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+.container{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+button{
+    cursor: pointer;
+}
+/* back ground */
+.back1, .back2, .back3{
+    position: absolute;
+    z-index: -5;
+}
+.back1{
+    bottom: 0;
+    left: 0;
+    width: 30%;
+}
+.back2{
+    top: 0;
+    right: 0;
+    width: 25%;
+}
+.back3{
+    bottom: 100px;
+    right: 15%;
+}
+/* back ground */
+/* holder container */
+.holder-container{
+    background-color: #fff;
+    width: 60%;
+    height: 70%;
+    /* margin: 0 auto; */
+    overflow: hidden;
+    display: flex;
+    position: absolute;
+    top: 50%;  
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 20px;
+}
+.img-mask, .login-register-box{
+    width: 50%;
+}
+.logo, .tren .duoi{
+    position: absolute;
+    z-index: 1;
+}
+.img-mask{
+    position: relative;
+    width: 45%;
+
+}
+.logo{
+    position: absolute;
+    top: 50%;  
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.anh-nhom{
+    width: 100%;
+    height: 100%;
+}
+/* holder container */
+/* login register box */
+.login-register-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.box-inner{
+    width: 70%;
+}
+.header{
+    width: 100%;
+    display: flex !important;
+    margin-bottom: 35px;
+    cursor: pointer;
+}
+.head1, .head2{
+    width: 100%;
+    text-align: center;
+    padding: 8px;
+    cursor: pointer;
+}
+.head1{
+    border-bottom: 2px solid #11698E;
+}
+.header>div>p{
+    font-weight: 550;
+    font-size: 0.875rem;
+}
+
+.label{
+    font-size: 0.875rem;
+    font-weight: 450;
+    margin-bottom: 10px;
+}
+.input-box{
+    margin-bottom: 20px;
+    border-radius: 4px;
+    padding: auto;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(0,0,0,0.25);
+}
+input#checkbox{
+    content: '';
+    border-radius: 4px;
+    border: 1px solid rgb(0,0,0,0.25);
+    display: inline-block;
+    margin-bottom: 30px;
+}
+#button-login{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 50px;
+    border: none;
+    background-color: #00A6DA;
+    color: #fff;
+    
+}
+#label{
+    font-size: 12px;
+    font-weight: 300;
+    word-spacing: 1px;
+    vertical-align: baseline;
+}
+/* login register box */
+/* Main Page */
+.big-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container1{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.container1>h1{
+    font-size: 64px;
+    font-weight: 700;
+}
+#logoutbutton{
+    width: 50%;
+    border: none;
+    border-radius: 10px;
+    background-color: #11698E;
+    color: #fff;
+    padding: 20px;
+    font-size: 36px;
+}
+/* Main Page */
