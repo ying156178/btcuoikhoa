@@ -168,6 +168,7 @@ body{
 .fa-regular.fa-clock{
     font-size: 16px;
     color: #5A5C63;
+    margin-right: 10px;
 }
 .note-content span{
     color: #5A5C63;
@@ -185,10 +186,12 @@ body{
     margin-left: 10px;
     font-size: 18px;
     color: #393939;
+    cursor: pointer;
 }
 .fa-regular.fa-pen-to-square{
     font-size: 18px;
     color: #393939;
+    cursor: pointer;
 }
 /* css form add new todo */
 .form{

@@ -64,12 +64,12 @@ function createNoteContent(){
     newDiv.setAttribute('class','line-content')
     newP2.setAttribute('class','content-name')
     newP2.setAttribute('id','content-name')
-    // newI1.setAttribute('class','fa-regular','fa-clock')
     newI1.className='fa-regular fa-clock'
-    newSpan.setAttribute('class','datecreated')
+    newSpan.setAttribute('class','time-name')
     newDiv2.setAttribute('class','edit-delete-button')
     newI2.className='fa-regular fa-pen-to-square'
     newI3.className='fa-solid fa-trash-can'
+
     // newI2.setAttribute('class','fa-regular','fa-pen-to-square')
     // newI3.setAttribute('class','fa-solid','fa-trash-can')
 
@@ -86,6 +86,9 @@ function createNoteContent(){
     newDiv2.appendChild(newI3)
     //tim vi tri cua to do list de add the li vao
     var position=document.getElementById('todolist')
+    // newSpan.innerHTML=new Date().toLocaleDateString('en-US',{day: 'numeric', 
+    // year:'numeric',
+    // month: 'short'})
     position.appendChild(newLi)
 }
 //local storage se co 4 key theo tung cai la mang de chua cac object gom category, title, content
@@ -100,6 +103,7 @@ function addValuetoLocalStorage(){
     var category = document.getElementById("category").value
     var title = document.getElementById("title").value
     var content = document.getElementById("content").value
+    var time=new Date().toLocaleDateString('en-US',{day: 'numeric',year:'numeric',month: 'short'})
     var parseTodo=JSON.parse(localStorage.getItem('todo'));
         if (parseTodo===null){
             parseTodo=[]
@@ -109,6 +113,7 @@ function addValuetoLocalStorage(){
             'category': category,
             'title': title,
             'content': content,
+            'time': time
         }
         parseTodo.push(objTodo)
         var setJSONTodo=JSON.stringify(parseTodo)
@@ -122,6 +127,8 @@ function appendnewTask(){
     document.getElementsByClassName('category-name')[parseTodo.length -1].innerHTML= latestTask.category;
     document.getElementsByClassName('task-name')[parseTodo.length -1].innerHTML= latestTask.title;
     document.getElementsByClassName('content-name')[parseTodo.length -1].innerHTML= latestTask.content;
+    document.getElementsByClassName('time-name')[parseTodo.length -1].innerHTML= latestTask.time;
+    document.getElementById('todo').innerHTML=parseTodo.length
 }
 //render nhung cai da co trong local storage phan todo
 function renderAvailableTodotoScreen(){
@@ -133,11 +140,13 @@ function renderAvailableTodotoScreen(){
             document.getElementsByClassName('task-name')[j].innerHTML= parseTodo[j].title;
             document.getElementsByClassName('content-name')[j].innerHTML= parseTodo[j].content;
         }
+        document.getElementById('todo').innerHTML=parseTodo.length
     }
+    
 }
 //nhung cai se thuc hien khi nhan nut submit
 document.addEventListener("DOMContentLoaded",function(){
-        renderAvailableTodotoScreen()
+    renderAvailableTodotoScreen()
     document.getElementById('submitbutton').addEventListener('click',function(){
         //check o
         checkEmtyorWhiteSpaceinCell();
@@ -152,4 +161,17 @@ document.addEventListener("DOMContentLoaded",function(){
 
         }
     })
+})
+
+//xoa todo 
+function deleteTask() {
+    const target = this.closest("li");
+    console.log(target.innerHTML);
+    target.parentNode.removeChild(target);
+  }  
+document.addEventListener("DOMContentLoaded",function(){
+    var trash = document.getElementsByClassName('fa-trash-can')
+    for (var i=0; i<trash.length;i++){
+        trash[i].addEventListener('click',deleteTask)
+    }
 })
