@@ -3,29 +3,50 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    list-style-type: none;
+
 }
 body{
     height: 100%;
 }
 .container{
-    width: 95%;
-    height: 100%;
+    width: 93%;
+    height: 95%;
     margin: 0 auto;
     margin-top: 30px;
-    overflow: hidden;
+    /* overflow: hidden; */
+    overflow-x: visible !important;
 }
 .logo{
-    width: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .logo img{
-    width: 100%;
+    width: 10%;
+}
+#newtaskbutton{
+    background: none;
+    border: none;
+    color: #5A5C63;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0px 20px;
+    height: 50px;
+    vertical-align: middle;
+    
+}
+#newtaskbutton:hover{
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+    border-radius: 4px;
 }
 .spec{
     display: flex;
     justify-content: space-between;
 }
 .spec-container{
-    width: 24%;
+    width: 22%;
 }
 .content-container .header{
     border-radius: 4px;
@@ -97,7 +118,7 @@ body{
 }
 .note-big-container{
     overflow-y: scroll;
-    height: 70dvh;
+    height: 75dvh;
 }
 .note-big-container::-webkit-scrollbar{
     width: 5px;
@@ -110,12 +131,13 @@ body{
 }
 .note-content{
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    padding: 30px;
+    padding: 27px;
     border-radius: 8px;
     background-color: #fff;
     position: relative;
-    padding-bottom: 55px;
-    margin-bottom: 25px;
+    padding-bottom: 40px;
+    margin-bottom: 20px;
+    overflow: hidden;
 }
 .note-content p:first-child{
     text-decoration: underline;
@@ -137,7 +159,7 @@ body{
     background-color: #DBDBDB;
     margin-bottom: 10px;
 }
-.note-content .note{
+.note-content .content-name{
     color: #5A5C63;
     font-size: 10px;
     font-weight: 400;
@@ -161,10 +183,56 @@ body{
 }
 .fa-solid.fa-trash-can{
     margin-left: 10px;
-    font-size: 20px;
+    font-size: 18px;
     color: #393939;
 }
 .fa-regular.fa-pen-to-square{
-    font-size: 20px;
+    font-size: 18px;
     color: #393939;
+}
+/* css form add new todo */
+.form{
+    position: absolute;
+    background-color: white;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transform: translate(-50%,-50%);
+    width: 40%;
+    height: 40%;
+    border-radius:4px ;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+}
+.form h3{
+    margin-bottom: 10px;
+    color: #393939;
+    text-align: center;
+}
+.fa-solid.fa-x{
+    color: #858585;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 14px;
+    cursor: pointer;
+}
+#category, #title, #content, #submitbutton{
+    width: 100%;
+    border-radius: 3px;
+    border: 0.5px solid #a9a9a9;
+    height: 25px;
+}
+#category, #title, #content{
+    margin-bottom: 5px;
+}
+#content{
+    height: 50%;
+}
+#submitbutton{
+    cursor: pointer;
 }
