@@ -8,6 +8,18 @@
 }
 body{
     height: 100%;
+    overflow: hidden;
+}
+#backgroundtask{
+    background-color: #393939;
+    width: 100dvw;
+    height: 100dvh;
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    z-index: -10;
+
 }
 .container{
     width: 93%;
@@ -224,18 +236,31 @@ body{
     font-size: 14px;
     cursor: pointer;
 }
-#category, #title, #content, #submitbutton{
+#category, #title, #content, #submitbutton,
+#edit-category, #edit-title, #edit-content, #editsubmitbutton{
     width: 100%;
     border-radius: 3px;
     border: 0.5px solid #a9a9a9;
     height: 25px;
 }
-#category, #title, #content{
+#category, #title, #content,
+#edit-category, #edit-title, #edit-content{
     margin-bottom: 5px;
 }
-#content{
+#content, #edit-content{
     height: 50%;
 }
-#submitbutton{
+#submitbutton, #editsubmitbutton{
     cursor: pointer;
+}
+/* form edit todo */
+#formedittodo{
+    height: 50%;
+    /* display: block; */
+}
+#list-button-status{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 5px;
 }

@@ -1,6 +1,9 @@
 //open Form
 function openForm(){
     formaddtodo.style.display="block";
+    backgroundtask=document.getElementById("backgroundtask");
+    backgroundtask.style.opacity='0.3'
+    backgroundtask.style.zIndex='10'
 }
 // close Form
 function closeForm(){
@@ -12,6 +15,21 @@ function closeForm(){
     document.getElementById("category").style.border='0.5px solid #a9a9a9'
     document.getElementById("title").style.border='0.5px solid #a9a9a9'
     document.getElementById("content").style.border='0.5px solid #a9a9a9'
+    backgroundtask=document.getElementById("backgroundtask");
+    backgroundtask.style.opacity='0'
+    backgroundtask.style.zIndex='-10'
+}
+function openEditForm(){
+    formedittodo.style.display="block";
+    backgroundtask=document.getElementById("backgroundtask");
+    backgroundtask.style.opacity='0.3'
+    backgroundtask.style.zIndex='10'
+}
+function closeEditForm(){
+    formedittodo.style.display="none";
+    backgroundtask=document.getElementById("backgroundtask");
+    backgroundtask.style.opacity='0'
+    backgroundtask.style.zIndex='-10'
 }
 //doi mau o khi phat hien noi dung
 function checkEmtyorWhiteSpaceinCell(){
@@ -67,11 +85,9 @@ function createNoteContent(){
     newI1.className='fa-regular fa-clock'
     newSpan.setAttribute('class','time-name')
     newDiv2.setAttribute('class','edit-delete-button')
-    newI2.className='fa-regular fa-pen-to-square'
+    newI2.className='fa-regular fa-pen-to-square editForm'
     newI3.className='fa-solid fa-trash-can'
 
-    // newI2.setAttribute('class','fa-regular','fa-pen-to-square')
-    // newI3.setAttribute('class','fa-solid','fa-trash-can')
 
     //them con cua the Li vao
     newLi.appendChild(newP1)
@@ -86,9 +102,6 @@ function createNoteContent(){
     newDiv2.appendChild(newI3)
     //tim vi tri cua to do list de add the li vao
     var position=document.getElementById('todolist')
-    // newSpan.innerHTML=new Date().toLocaleDateString('en-US',{day: 'numeric', 
-    // year:'numeric',
-    // month: 'short'})
     position.appendChild(newLi)
 }
 //local storage se co 4 key theo tung cai la mang de chua cac object gom category, title, content
@@ -109,6 +122,7 @@ function addValuetoLocalStorage(){
             parseTodo=[]
         }
         //create new note content value
+
         var objTodo={
             'category': category,
             'title': title,
@@ -124,10 +138,12 @@ function appendnewTask(){
     const parseTodo = JSON.parse(localStorage.getItem('todo'));
     const latestTask = parseTodo[parseTodo.length - 1];
     createNoteContent()
+    addEventforTrashbutton();
     document.getElementsByClassName('category-name')[parseTodo.length -1].innerHTML= latestTask.category;
     document.getElementsByClassName('task-name')[parseTodo.length -1].innerHTML= latestTask.title;
     document.getElementsByClassName('content-name')[parseTodo.length -1].innerHTML= latestTask.content;
     document.getElementsByClassName('time-name')[parseTodo.length -1].innerHTML= latestTask.time;
+    document.getElementsByClassName('editForm')[parseTodo.length -1].addEventListener('click',openEditForm)
     document.getElementById('todo').innerHTML=parseTodo.length
 }
 //render nhung cai da co trong local storage phan todo
@@ -139,19 +155,23 @@ function renderAvailableTodotoScreen(){
             document.getElementsByClassName('category-name')[j].innerHTML= parseTodo[j].category;
             document.getElementsByClassName('task-name')[j].innerHTML= parseTodo[j].title;
             document.getElementsByClassName('content-name')[j].innerHTML= parseTodo[j].content;
+            document.getElementsByClassName('time-name')[j].innerHTML= parseTodo[j].time;
+            document.getElementsByClassName('fa-trash-can')[j].addEventListener('click',deleteTask)
+            document.getElementsByClassName('editForm')[j].addEventListener('click',openEditForm)
+
         }
         document.getElementById('todo').innerHTML=parseTodo.length
     }
-    
 }
 //nhung cai se thuc hien khi nhan nut submit
 document.addEventListener("DOMContentLoaded",function(){
     renderAvailableTodotoScreen()
+    renderAvailableDoingtoScreen()
     document.getElementById('submitbutton').addEventListener('click',function(){
         //check o
         checkEmtyorWhiteSpaceinCell();
         checkCategory,checkTitle,checkContent=checkEmtyorWhiteSpaceinCell();
-        if (checkTitle,checkCategory,checkContent){
+        if (checkTitle && checkCategory && checkContent){
             //luu du lieu vao local storage
             addValuetoLocalStorage()
             //append new task
@@ -166,12 +186,135 @@ document.addEventListener("DOMContentLoaded",function(){
 //xoa todo 
 function deleteTask() {
     const target = this.closest("li");
-    console.log(target.innerHTML);
+    // console.log(target.innerHTML);
+    var category = target.querySelector('#category-name').textContent
+    console.log(category);
+    var title = target.querySelector('#task-name').textContent
+    var content=target.querySelector('#content-name').textContent
+    var time=target.querySelector('.time-name').textContent
     target.parentNode.removeChild(target);
+    let parseTodo = JSON.parse(localStorage.getItem('todo'));
+    var arrTodo=Object.values(parseTodo)
+    for (var i=0; i<arrTodo.length; i++){
+        if (arrTodo[i].category == category && arrTodo[i].title==title 
+            && arrTodo[i].content==content && arrTodo[i].time ==time) {
+                arrTodo.splice(i,1)
+                console.log(arrTodo,'huhuhu');
+    }}
+    let convertTodo=Object.assign([],arrTodo)
+    console.log(convertTodo);
+    localStorage.setItem('todo', JSON.stringify(convertTodo));
+    updateTodocount();
   }  
-document.addEventListener("DOMContentLoaded",function(){
+function updateTodocount(){
+    var parseTodo2=JSON.parse(localStorage.getItem('todo'))
+    document.getElementById('todo').innerHTML=parseTodo2.length
+    console.log(parseTodo2.length);
+}
+
+
+// document.addEventListener("DOMContentLoaded",function(){
+//     var trash = document.getElementsByClassName('fa-trash-can')
+//     for (var i=0; i<trash.length;i++){
+//         trash[i].addEventListener('click',deleteTask)
+//     }
+//     // updateTodocount()
+// })
+function addEventforTrashbutton(){
     var trash = document.getElementsByClassName('fa-trash-can')
     for (var i=0; i<trash.length;i++){
         trash[i].addEventListener('click',deleteTask)
     }
-})
+}
+
+//render available tasks in Doing
+function renderAvailableDoingtoScreen(){
+    var parseDoing=JSON.parse(localStorage.getItem('doing'))
+    if (Array.isArray(parseDoing)){
+        for(var j=0; j<parseDoing.length; j++){
+            createNoteContent()
+            document.getElementsByClassName('category-name')[j].innerHTML= parseDoing[j].category;
+            document.getElementsByClassName('task-name')[j].innerHTML= parseDoing[j].title;
+            document.getElementsByClassName('content-name')[j].innerHTML= parseDoing[j].content;
+            document.getElementsByClassName('time-name')[j].innerHTML= parseDoing[j].time;
+            document.getElementsByClassName('fa-trash-can')[j].addEventListener('click',deleteTask)
+
+        }
+        document.getElementById('todo').innerHTML=parseDoing.length
+    }
+}
+
+
+
+
+
+function deleteTask() {
+    const target = this.closest("li");
+    // console.log(target.innerHTML);
+    var category = target.querySelector('#category-name').textContent
+    var title = target.querySelector('#task-name').textContent
+    var content=target.querySelector('#content-name').textContent
+    var time=target.querySelector('.time-name').textContent
+    target.parentNode.removeChild(target);
+    let parseTodo = JSON.parse(localStorage.getItem('todo'));
+    var arrTodo=Object.values(parseTodo)
+    for (var i=0; i<arrTodo.length; i++){
+        if (arrTodo[i].category == category && arrTodo[i].title==title 
+            && arrTodo[i].content==content && arrTodo[i].time ==time) {
+                arrTodo.splice(i,1)
+                console.log(arrTodo,'huhuhu');
+    }}
+    let convertTodo=Object.assign([],arrTodo)
+    localStorage.setItem('todo', JSON.stringify(convertTodo));
+    updateTodocount();
+  }  
+
+//function render ra noi dung san co trong form edit
+// function renderAvailableValueinEditForm(event){
+//     const targetEdit = event.target.closest("li");
+//     var category = targetEdit.querySelector('#category-name').textContent
+//     var title = targetEdit.querySelector('#task-name').textContent
+//     var content=targetEdit.querySelector('#content-name').textContent
+//     var time=targetEdit.querySelector('.time-name').textContent
+//     var renderCategory = document.getElementById('edit-category');
+//     var renderTitle = document.getElementById('edit-title');
+//     var renderContent = document.getElementById('edit-content');
+//     renderCategory.innerHTML=category
+//     renderTitle.innerHTML=title
+//     renderContent.innerHTML=content
+//     console.log(category, title, content);
+// }
+// document.addEventListener('DOMContentLoaded',function(event){
+//     var editFormButton = event.target.closest("li").querySelector('.editForm')
+//     console.log(editFormButton);
+//     editFormButton.addEventListener('click',renderAvailableValueinEditForm)
+// })
+
+
+function renderAvailableValueinEditForm(event) {
+    const targetEdit = event.target.closest("li");
+    console.log(targetEdit);
+    if (targetEdit) {
+        var category = targetEdit.querySelector('#category-name').textContent;
+        var title = targetEdit.querySelector('#task-name').textContent;
+        var content = targetEdit.querySelector('#content-name').textContent;
+        var time = targetEdit.querySelector('.time-name').textContent;
+        var renderCategory = document.getElementById('edit-category');
+        console.log(renderCategory);
+        var renderTitle = document.getElementById('edit-title');
+        var renderContent = document.getElementById('edit-content');
+        renderCategory.value = category;
+        renderTitle.value = title;
+        renderContent.value = content;
+        console.log(category, title, content);
+    } else {
+        console.error('Unable to find parent <li> element.');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var editFormButtons = document.querySelectorAll('.editForm');
+    editFormButtons.forEach(function(button) {
+        button.addEventListener('click', renderAvailableValueinEditForm);
+    });
+});

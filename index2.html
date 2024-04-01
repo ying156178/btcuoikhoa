@@ -14,7 +14,9 @@
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 </head>
 <body>
+    
     <div class="container">
+        <div id="backgroundtask"></div>
         <div class="logo">
             <img src="./img2/logo.png" alt="">
             <button id="newtaskbutton" onclick="openForm()">+ New task</button>
@@ -104,6 +106,23 @@
         <input id="content" type="text" placeholder="Content">
         <button id="submitbutton">Submit</button>
     </div>
-    
+    <div id="formedittodo" class="form">
+        <h3>Edit todo</h3>
+        <i class="fa-solid fa-x" onclick="closeEditForm()"></i>
+        <input type="text"  id="edit-category">
+        <input type="text" id="edit-title">
+        <input type="text" id="edit-content">
+        <ul id="list-button-status">
+            <li><input type="radio" id="button-todo" name="listbuttonstatus">
+            <label for="button-todo">Todo</label></li>
+            <li><input type="radio" id="button-doing" name="listbuttonstatus">
+            <label for="button-doing">Doing</label></li>
+            <li><input type="radio" id="button-finish" name="listbuttonstatus">
+            <label for="button-finish">Finished</label></li>
+            <li><input type="radio" id="button-block" name="listbuttonstatus">
+            <label for="button-block">Blocked</label></li>
+        </ul>
+        <button id="editsubmitbutton">Submit</button>
+    </div>
 </body>
 </html>
