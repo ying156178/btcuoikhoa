@@ -1,0 +1,21 @@
+@media only screen and (max-width:1150px){
+    .spec{
+        flex-wrap: wrap !important;
+    }
+    .spec-container{
+        width: 48% !important;
+        height: 50% !important;
+    }
+    .note-big-container{
+        height: 36dvh !important;
+    }
+    /* .note-content h2{
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    } */
+    .note-content .content-name {
+        /* word-wrap: break-word; */
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }
+}

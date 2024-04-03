@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-do Page</title>
+    <!-- file css -->
+    <link rel="stylesheet" href="./tablet2.css">
     <link rel="stylesheet" href="./main2.css">
     <script src="./main2.js"></script>
     <!-- cdn -->
@@ -103,7 +105,7 @@
         <i class="fa-solid fa-x" onclick="closeForm()"></i>
         <input id="category" type="text" placeholder="Category. Etc. Marketing">
         <input id="title" type="text" placeholder="Title">
-        <input id="content" type="text" placeholder="Content">
+        <textarea id="content" type="text" placeholder="Content"></textarea>
         <button id="submitbutton">Submit</button>
     </div>
     <div id="formedittodo" class="form">
@@ -111,7 +113,7 @@
         <i class="fa-solid fa-x" onclick="closeEditForm()"></i>
         <input type="text"  id="edit-category">
         <input type="text" id="edit-title">
-        <input type="text" id="edit-content">
+        <textarea type="text" id="edit-content"></textarea>
         <ul id="list-button-status">
             <li><input type="radio" id="button-todo" name="listbuttonstatus">
             <label for="button-todo">Todo</label></li>
