@@ -358,14 +358,14 @@ function getValuefromEditForminTodo(category,title,content,time,timecheck){
 }
 //render ket qua sau khi edit ket qua
 function renderResultafterEdit(){
-    var parseTodo2=JSON.parse(localStorage.getItem('todo'))
-    if (Array.isArray(parseTodo2)){
-        for(var j=0; j<parseTodo2.length; j++){
-            document.getElementsByClassName('category-name')[j].innerHTML= parseTodo2[j].category;
-            document.getElementsByClassName('task-name')[j].innerHTML= parseTodo2[j].title;
-            document.getElementsByClassName('content-name')[j].innerHTML= parseTodo2[j].content;
-            document.getElementsByClassName('time-name')[j].innerHTML= parseTodo2[j].time;
-            document.getElementsByClassName('timecheck')[j].innerHTML= parseTodo2[j].timecheck;
+    var parseTodo=JSON.parse(localStorage.getItem('todo'))
+    if (Array.isArray(parseTodo)){
+        for(var j=0; j<parseTodo.length; j++){
+            document.getElementsByClassName('category-name')[j].innerHTML= parseTodo[j].category;
+            document.getElementsByClassName('task-name')[j].innerHTML= parseTodo[j].title;
+            document.getElementsByClassName('content-name')[j].innerHTML= parseTodo[j].content;
+            document.getElementsByClassName('time-name')[j].innerHTML= parseTodo[j].time;
+            document.getElementsByClassName('timecheck')[j].innerHTML= parseTodo[j].timecheck;
             document.getElementsByClassName('fa-trash-can')[j].addEventListener('click',deleteTask)
             document.getElementsByClassName('editForm')[j].addEventListener('click',openEditForm)
 
