@@ -352,12 +352,12 @@ function getValuefromEditForminTodo(category,title,content,time,timecheck){
     }}
     localStorage.setItem('todo', JSON.stringify(arrTodo));
     //doan nay them code kiem tra gia tri cua cac button
-    renderResultafterEdit()
+    renderResultafterEditTodo()
 
     
 }
 //render ket qua sau khi edit ket qua
-function renderResultafterEdit(){
+function renderResultafterEditTodo(){
     var parseTodo=JSON.parse(localStorage.getItem('todo'))
     if (Array.isArray(parseTodo)){
         for(var j=0; j<parseTodo.length; j++){
@@ -373,4 +373,22 @@ function renderResultafterEdit(){
     }
 }
 
-
+//function check task area 
+function checkwhichButtonchecked(){
+    var buttontodo=document.getElementById('button-todo')
+    var buttondoing=document.getElementById('button-doing')
+    var buttonfinish=document.getElementById('button-finish')
+    var buttonblock=document.getElementById('button-block')
+    if (buttontodo.checked==true){
+        //pass
+    }else if (buttondoing.checked==true){
+        appendTasktoDoing()
+    }else if (buttonfinish.checked==true){
+        appendTasktoFinish()
+    }else if (buttonblock.checked==true){
+        appendTasktoBlock()
+    }
+}
+function appendTasktoDoing(){
+    
+}
