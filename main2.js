@@ -138,7 +138,6 @@ function createNoteContent(){
     newDiv2.appendChild(newI3)
     //tim vi tri cua to do list de add the li vao
     var position=document.getElementById('todolist')
-    console.log(position);
     position.appendChild(newLi)
 }
 //function tao 1 note-content moi o doing
@@ -297,7 +296,6 @@ function addValuetoLocalStorage(){
     var time=new Date().toLocaleDateString('en-US',{day: 'numeric',year:'numeric',month: 'short'})
     var timecheck=new Date().toLocaleDateString('en-US',{day:'numeric',year:'numeric', month:'numeric',
         hour: 'numeric',minute: 'numeric',second:'numeric'})
-    console.log(timecheck);
     var parseTodo=JSON.parse(localStorage.getItem('todo'));
         if (parseTodo===null){
             parseTodo=[]
@@ -334,23 +332,23 @@ function appendnewTask(){
     });
 }
 //function to append new task to doing
-// function appendnewTasktoDoing(){
-//     const parseDoing = JSON.parse(localStorage.getItem('doing'));
-//     const latestTask = parseDoing[parseDoing.length - 1];
-//     createNoteContent()
-//     addEventforTrashbutton();
-//     document.getElementsByClassName('category-name')[parseDoing.length -1].innerHTML= latestTask.category;
-//     document.getElementsByClassName('task-name')[parseDoing.length -1].innerHTML= latestTask.title;
-//     document.getElementsByClassName('content-name')[parseDoing.length -1].innerHTML= latestTask.content;
-//     document.getElementsByClassName('time-name')[parseDoing.length -1].innerHTML= latestTask.time;
-//     document.getElementsByClassName('timecheck')[parseDoing.length -1].innerHTML= latestTask.timecheck;
-//     document.getElementsByClassName('editForm')[parseDoing.length -1].addEventListener('click',openEditForm)
-//     document.getElementById('todo').innerHTML=parseDoing.length
-//     var editFormButtons = document.querySelectorAll('.editForm');
-//     editFormButtons.forEach(function(button) {
-//         button.addEventListener('click', renderAvailableValueinEditForm);
-//     });
-// }
+function appendnewTasktoDoing(){
+    const parseDoing = JSON.parse(localStorage.getItem('doing'));
+    const latestTask = parseDoing[parseDoing.length - 1];
+    createNoteContent()
+    addEventforTrashbutton();
+    document.getElementsByClassName('category-name')[parseDoing.length -1].innerHTML= latestTask.category;
+    document.getElementsByClassName('task-name')[parseDoing.length -1].innerHTML= latestTask.title;
+    document.getElementsByClassName('content-name')[parseDoing.length -1].innerHTML= latestTask.content;
+    document.getElementsByClassName('time-name')[parseDoing.length -1].innerHTML= latestTask.time;
+    document.getElementsByClassName('timecheck')[parseDoing.length -1].innerHTML= latestTask.timecheck;
+    document.getElementsByClassName('editForm')[parseDoing.length -1].addEventListener('click',openEditForm)
+    document.getElementById('doing').innerHTML=parseDoing.length
+    var editFormButtons = document.querySelectorAll('.editForm');
+    editFormButtons.forEach(function(button) {
+        button.addEventListener('click', renderAvailableValueinEditForm);
+    });
+}
 //function to append new task to finish
 // function appendnewTasktoFinish(){
 //     const parseFinish = JSON.parse(localStorage.getItem('finish'));
@@ -363,7 +361,7 @@ function appendnewTask(){
 //     document.getElementsByClassName('time-name')[parseFinish.length -1].innerHTML= latestTask.time;
 //     document.getElementsByClassName('timecheck')[parseFinish.length -1].innerHTML= latestTask.timecheck;
 //     document.getElementsByClassName('editForm')[parseFinish.length -1].addEventListener('click',openEditForm)
-//     document.getElementById('todo').innerHTML=parseFinish.length
+//     document.getElementById('finish').innerHTML=parseFinish.length
 //     var editFormButtons = document.querySelectorAll('.editForm');
 //     editFormButtons.forEach(function(button) {
 //         button.addEventListener('click', renderAvailableValueinEditForm);
@@ -381,7 +379,7 @@ function appendnewTask(){
 //     document.getElementsByClassName('time-name')[parseBlock.length -1].innerHTML= latestTask.time;
 //     document.getElementsByClassName('timecheck')[parseBlock.length -1].innerHTML= latestTask.timecheck;
 //     document.getElementsByClassName('editForm')[parseBlock.length -1].addEventListener('click',openEditForm)
-//     document.getElementById('todo').innerHTML=parseBlock.length
+//     document.getElementById('block').innerHTML=parseBlock.length
 //     var editFormButtons = document.querySelectorAll('.editForm');
 //     editFormButtons.forEach(function(button) {
 //         button.addEventListener('click', renderAvailableValueinEditForm);
@@ -435,7 +433,6 @@ function deleteTask() {
     const target = this.closest("li");
     // console.log(target.innerHTML);
     var category = target.querySelector('#category-name').textContent
-    console.log(category);
     var title = target.querySelector('#task-name').textContent
     var content=target.querySelector('#content-name').textContent
     var time=target.querySelector('.time-name').textContent
@@ -450,7 +447,6 @@ function deleteTask() {
                 arrTodo.splice(i,1)
     }}
     let convertTodo=Object.assign([],arrTodo)
-    console.log(convertTodo);
     localStorage.setItem('todo', JSON.stringify(convertTodo));
     updateTodocount();
   }  
@@ -465,11 +461,7 @@ function deleteTaskDoing() {
     var timecheck=target.querySelector('.timecheck').textContent
     target.parentNode.removeChild(target);
     let parseDoing = JSON.parse(localStorage.getItem('doing'));
-    console.log(parseDoing);
     var arrDoing=Object.values(parseDoing)
-    console.log(arrDoing);
-    console.log('cate1',category);
-    console.log('cate2',arrDoing[0].category);
     for (var i=0; i<arrDoing.length; i++){
         if (arrDoing[i].category == category && arrDoing[i].title==title 
             && arrDoing[i].content==content && arrDoing[i].time ==time
@@ -477,7 +469,6 @@ function deleteTaskDoing() {
                 arrDoing.splice(i,1)
     }}
     let convertDoing=Object.assign([],arrDoing)
-    console.log(convertDoing);
     localStorage.setItem('doing', JSON.stringify(convertDoing));
     updateDoingcount();
   }  
@@ -533,7 +524,6 @@ function deleteTaskBlock() {
 function updateTodocount(){
     var parseTodo=JSON.parse(localStorage.getItem('todo'))
     document.getElementById('todo').innerHTML=parseTodo.length
-    console.log(parseTodo.length);
 }
 //update doing count
 function updateDoingcount(){
@@ -559,20 +549,16 @@ function addEventforTrashbutton(){
     for (var i=0; i<trash.length;i++){
         trash[i].addEventListener('click',deleteTask)
     }
-
     var doingsection=document.getElementById('doing-list')
-    console.log(doingsection);
     var trashdoing = doingsection.getElementsByClassName('fa-trash-can')
     for (var i=0; i<trashdoing.length;i++){
         trashdoing[i].addEventListener('click',deleteTaskDoing)
     }
-
     var finishsection=document.getElementById('finish-list')
     var trashfinish = finishsection.getElementsByClassName('fa-trash-can')
     for (var i=0; i<trashfinish.length;i++){
         trashfinish[i].addEventListener('click',deleteTaskFinish)
     }
-
     var blocksection=document.getElementById('block-list')
     var trashblock = blocksection.getElementsByClassName('fa-trash-can')
     for (var i=0; i<trashblock.length;i++){
@@ -641,7 +627,7 @@ function renderAvailableBlocktoScreen(){
 
 //function render ra noi dung san co trong form edit
 function renderAvailableValueinEditForm(event) {
-    document.getElementById('formedittodo').style.display="block";
+    openEditForm()
     const targetEdit = event.target.closest("li");
     if (targetEdit) {
         var category = targetEdit.querySelector('#category-name').textContent;
@@ -677,7 +663,6 @@ function renderAvailableValueinEditForm(event) {
 
 document.addEventListener('DOMContentLoaded', function() {
     var editFormButtons = document.querySelectorAll('.editForm');
-    console.log(editFormButtons);
     editFormButtons.forEach(function(button) {
         button.addEventListener('click', renderAvailableValueinEditForm);
     });
@@ -690,12 +675,10 @@ function getValuefromEditForminTodo(category,title,content,time,timecheck){
     var renderTitle1 = document.getElementById('edit-title');
     var renderContent1 = document.getElementById('edit-content');
     var renderTime=time;
-    console.log(time);
     var renderTimecheck=timecheck;
     var editCategory=renderCategory1.value;
     var editTitle=renderTitle1.value;
     var editContent=renderContent1.value;
-    
     var editTime=new Date().toLocaleDateString('en-US',{day: 'numeric',year:'numeric',month: 'short'});
     var editTimecheck=new Date().toLocaleDateString('en-US',{day:'numeric',year:'numeric', month:'numeric',
     hour: 'numeric',minute: 'numeric',second:'numeric'});;
@@ -716,8 +699,7 @@ function getValuefromEditForminTodo(category,title,content,time,timecheck){
     localStorage.setItem('todo', JSON.stringify(arrTodo));
     //doan nay them code kiem tra gia tri cua cac button
     renderResultafterEditTodo()
-
-    
+ 
 }
 //render ket qua sau khi edit ket qua
 function renderResultafterEditTodo(){
@@ -745,7 +727,7 @@ function renderResultafterEditDoing(){
             document.getElementsByClassName('content-name')[j].innerHTML= parseDoing[j].content;
             document.getElementsByClassName('time-name')[j].innerHTML= parseDoing[j].time;
             document.getElementsByClassName('timecheck')[j].innerHTML= parseDoing[j].timecheck;
-            document.getElementsByClassName('fa-trash-can')[j].addEventListener('click',deleteTask)
+            document.getElementsByClassName('fa-trash-can')[j].addEventListener('click',deleteTaskDoing)
             document.getElementsByClassName('editForm')[j].addEventListener('click',openEditForm)
 
         }
@@ -761,7 +743,7 @@ function renderResultafterEditFinish(){
             document.getElementsByClassName('content-name')[j].innerHTML= parseFinish[j].content;
             document.getElementsByClassName('time-name')[j].innerHTML= parseFinish[j].time;
             document.getElementsByClassName('timecheck')[j].innerHTML= parseFinish[j].timecheck;
-            document.getElementsByClassName('fa-trash-can')[j].addEventListener('click',deleteTask)
+            document.getElementsByClassName('fa-trash-can')[j].addEventListener('click',deleteTaskFinish)
             document.getElementsByClassName('editForm')[j].addEventListener('click',openEditForm)
 
         }
@@ -777,30 +759,12 @@ function renderResultafterEditBlock(){
             document.getElementsByClassName('content-name')[j].innerHTML= parseBlock[j].content;
             document.getElementsByClassName('time-name')[j].innerHTML= parseBlock[j].time;
             document.getElementsByClassName('timecheck')[j].innerHTML= parseBlock[j].timecheck;
-            document.getElementsByClassName('fa-trash-can')[j].addEventListener('click',deleteTask)
+            document.getElementsByClassName('fa-trash-can')[j].addEventListener('click',deleteTaskBlock)
             document.getElementsByClassName('editForm')[j].addEventListener('click',openEditForm)
 
         }
     }
 }
-//function check task area 
-function checkwhichButtonchecked(category,title,content,time,timecheck){
-    var buttontodo=document.getElementById('button-todo')
-    var buttondoing=document.getElementById('button-doing')
-    var buttonfinish=document.getElementById('button-finish')
-    var buttonblock=document.getElementById('button-block')
-    if (buttontodo.checked==true){
-        //pass getvaluefromedittodoform()
-    }else if (buttondoing.checked==true){
-        deleteTaskinTodo(category,title,content,time,timecheck);
-        appendTasktoDoing()
-    }else if (buttonfinish.checked==true){
-        appendTasktoFinish(category,title,content,time,timecheck)
-    }else if (buttonblock.checked==true){
-        appendTasktoBlock(category,title,content,time,timecheck)
-    }
-}
-
 
 
 //function deletetask in doing
@@ -862,8 +826,10 @@ function deleteTaskinBlock(category,title,content,time,timecheck){
 }
 function deleteTaskinTodo(category,title,content,time,timecheck){
     let parseTodo = JSON.parse(localStorage.getItem('todo'));
+    console.log('parse',parseTodo);
     //xoa gia tri trong local storage key todo
     var arrTodo=Object.values(parseTodo)
+    console.log('arr',arrTodo);
     for (var i=0; i<arrTodo.length; i++){
         if (arrTodo[i].category == category && arrTodo[i].title==title 
         && arrTodo[i].content==content && arrTodo[i].time ==time
@@ -872,7 +838,11 @@ function deleteTaskinTodo(category,title,content,time,timecheck){
             break;
     }}
     var todosection=document.getElementById('todolist');
+    console.log(todosection);
     todosection.removeChild(todosection.children[position]);
+    console.log('done todosection');
+
+
     arrTodo.splice(position,1)
     localStorage.setItem('todo', JSON.stringify(arrTodo));
     updateTodocount();
@@ -906,13 +876,31 @@ function appendTasktoDoing(){
     parseDoing.push(objDoing);
     const setJSONKeys=JSON.stringify(parseDoing);
     localStorage.setItem('doing',setJSONKeys);
-    renderAvailableTodotoScreen()
-    renderAvailableDoingtoScreen()
+    // renderAvailableTodotoScreen()
+    // renderAvailableDoingtoScreen()
+    appendnewTasktoDoing()
     
     
 
 }
-function appendnewTasktoDoing(){
-    const parseDoing = JSON.parse(localStorage.getItem('doing'));
+// function appendnewTasktoDoing(){
+//     const parseDoing = JSON.parse(localStorage.getItem('doing'));
     
+// }
+//function check task area 
+function checkwhichButtonchecked(category,title,content,time,timecheck){
+    var buttontodo=document.getElementById('button-todo')
+    var buttondoing=document.getElementById('button-doing')
+    var buttonfinish=document.getElementById('button-finish')
+    var buttonblock=document.getElementById('button-block')
+    if (buttontodo.checked==true){
+        //pass getvaluefromedittodoform()
+    }else if (buttondoing.checked==true){
+        deleteTaskinTodo();
+        appendTasktoDoing()
+    }else if (buttonfinish.checked==true){
+        appendTasktoFinish(category,title,content,time,timecheck)
+    }else if (buttonblock.checked==true){
+        appendTasktoBlock(category,title,content,time,timecheck)
+    }
 }
