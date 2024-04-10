@@ -1,18 +1,42 @@
-async function login(){
+
+function login(){
     const username=document.getElementById('username').value;
-    const password=document.getElementById('password').value;
-    const data= await fetch('https://dummyjson.com/auth/login',{
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({   //du lieu muon gui den server thi de trong body
-            username: username,
-            password: password,
-        })
+const password=document.getElementById('password').value;
+let infor = {
+    "login": username,
+    "password": password,
+};
+
+if(username && password){
+    const url = "https://recruitment-api.pyt1.stg.jmr.pl/login";
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(infor),
     })
-    const res =await data.json();
-    localStorage.setItem('token',res.token)
-    redirectToNewPage()
+        .then(response => response.json())
+        .then(data => {
+            if(data.message === "Hello 😉! How are you?" &&  data.status === "ok"){
+                alert("Login successfully!")
+                window.location.href="./index2.html"; //Switch pages in the same tab, cannot back to login page (assign có thể back vê trang login)
+            }else{
+                if(!username || !password){
+                    return false;
+                }else{
+                    alert("Email or password is not correct!"); //only alert incorrect when filled into 2 inputs completedly
+                    username = "";
+                    password = "";
+                    username.style.borderColor = "rgba(217, 217, 217, 1)";
+                    password.style.borderColor = "rgba(217, 217, 217, 1)";
+                }
+            }
+        })
 }
+}
+
+
 // document.getElementById('button').addEventListener('click',login);
 document.addEventListener('DOMContentLoaded',function(){
     document.getElementById('button-login').addEventListener('click',login);
