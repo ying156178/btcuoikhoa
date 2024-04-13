@@ -1,4 +1,3 @@
-
 //open Form
 function openForm(){
     formaddtodo.style.display="block";
@@ -232,6 +231,7 @@ function createNoteContentinFinish(){
     newDiv2.appendChild(newI3)
     //tim vi tri cua to do list de add the li vao
     var position=document.getElementById('finish-list')
+    console.log(position);
     position.appendChild(newLi)
 }
 //function tao 1 note-content moi o block
@@ -332,10 +332,11 @@ function appendnewTask(){
     });
 }
 //function to append new task to doing
-function appendnewTasktoDoing(){
+function appendnewTasktoDoing(){    
     const parseDoing = JSON.parse(localStorage.getItem('doing'));
     const latestTask = parseDoing[parseDoing.length - 1];
-    createNoteContent()
+    console.log('dang chay');
+    createNoteContentinDoing()
     addEventforTrashbutton();
     document.getElementsByClassName('category-name')[parseDoing.length -1].innerHTML= latestTask.category;
     document.getElementsByClassName('task-name')[parseDoing.length -1].innerHTML= latestTask.title;
@@ -350,41 +351,41 @@ function appendnewTasktoDoing(){
     });
 }
 //function to append new task to finish
-// function appendnewTasktoFinish(){
-//     const parseFinish = JSON.parse(localStorage.getItem('finish'));
-//     const latestTask = parseFinish[parseFinish.length - 1];
-//     createNoteContent()
-//     addEventforTrashbutton();
-//     document.getElementsByClassName('category-name')[parseFinish.length -1].innerHTML= latestTask.category;
-//     document.getElementsByClassName('task-name')[parseFinish.length -1].innerHTML= latestTask.title;
-//     document.getElementsByClassName('content-name')[parseFinish.length -1].innerHTML= latestTask.content;
-//     document.getElementsByClassName('time-name')[parseFinish.length -1].innerHTML= latestTask.time;
-//     document.getElementsByClassName('timecheck')[parseFinish.length -1].innerHTML= latestTask.timecheck;
-//     document.getElementsByClassName('editForm')[parseFinish.length -1].addEventListener('click',openEditForm)
-//     document.getElementById('finish').innerHTML=parseFinish.length
-//     var editFormButtons = document.querySelectorAll('.editForm');
-//     editFormButtons.forEach(function(button) {
-//         button.addEventListener('click', renderAvailableValueinEditForm);
-//     });
-// }
+function appendnewTasktoFinish(){
+    const parseFinish = JSON.parse(localStorage.getItem('finish'));
+    const latestTask = parseFinish[parseFinish.length - 1];
+    createNoteContentinFinish()
+    addEventforTrashbutton(); 
+    document.getElementsByClassName('category-name')[parseFinish.length -1].innerHTML= latestTask.category;
+    document.getElementsByClassName('task-name')[parseFinish.length -1].innerHTML= latestTask.title;
+    document.getElementsByClassName('content-name')[parseFinish.length -1].innerHTML= latestTask.content;
+    document.getElementsByClassName('time-name')[parseFinish.length -1].innerHTML= latestTask.time;
+    document.getElementsByClassName('timecheck')[parseFinish.length -1].innerHTML= latestTask.timecheck;
+    document.getElementsByClassName('editForm')[parseFinish.length -1].addEventListener('click',openEditForm)
+    document.getElementById('finish').innerHTML=parseFinish.length
+    var editFormButtons = document.querySelectorAll('.editForm');
+    editFormButtons.forEach(function(button) {
+        button.addEventListener('click', renderAvailableValueinEditForm);
+    });
+}
 //function to append new task to block
-// function appendnewTasktoBlock(){
-//     const parseBlock = JSON.parse(localStorage.getItem('block'));
-//     const latestTask = parseBlock[parseBlock.length - 1];
-//     createNoteContent()
-//     addEventforTrashbutton();
-//     document.getElementsByClassName('category-name')[parseBlock.length -1].innerHTML= latestTask.category;
-//     document.getElementsByClassName('task-name')[parseBlock.length -1].innerHTML= latestTask.title;
-//     document.getElementsByClassName('content-name')[parseBlock.length -1].innerHTML= latestTask.content;
-//     document.getElementsByClassName('time-name')[parseBlock.length -1].innerHTML= latestTask.time;
-//     document.getElementsByClassName('timecheck')[parseBlock.length -1].innerHTML= latestTask.timecheck;
-//     document.getElementsByClassName('editForm')[parseBlock.length -1].addEventListener('click',openEditForm)
-//     document.getElementById('block').innerHTML=parseBlock.length
-//     var editFormButtons = document.querySelectorAll('.editForm');
-//     editFormButtons.forEach(function(button) {
-//         button.addEventListener('click', renderAvailableValueinEditForm);
-//     });
-// }
+function appendnewTasktoBlock(){
+    const parseBlock = JSON.parse(localStorage.getItem('block'));
+    const latestTask = parseBlock[parseBlock.length - 1];
+    createNoteContentinBlock()
+    addEventforTrashbutton();
+    document.getElementsByClassName('category-name')[parseBlock.length -1].innerHTML= latestTask.category;
+    document.getElementsByClassName('task-name')[parseBlock.length -1].innerHTML= latestTask.title;
+    document.getElementsByClassName('content-name')[parseBlock.length -1].innerHTML= latestTask.content;
+    document.getElementsByClassName('time-name')[parseBlock.length -1].innerHTML= latestTask.time;
+    document.getElementsByClassName('timecheck')[parseBlock.length -1].innerHTML= latestTask.timecheck;
+    document.getElementsByClassName('editForm')[parseBlock.length -1].addEventListener('click',openEditForm)
+    document.getElementById('block').innerHTML=parseBlock.length
+    var editFormButtons = document.querySelectorAll('.editForm');
+    editFormButtons.forEach(function(button) {
+        button.addEventListener('click', renderAvailableValueinEditForm);
+    });
+}
 //render nhung cai da co trong local storage phan todo
 function renderAvailableTodotoScreen(){
     var parseTodo=JSON.parse(localStorage.getItem('todo'))
@@ -431,13 +432,16 @@ document.addEventListener("DOMContentLoaded",function(){
 //xoa todo 
 function deleteTask() {
     const target = this.closest("li");
+    console.log(target);
     // console.log(target.innerHTML);
     var category = target.querySelector('#category-name').textContent
     var title = target.querySelector('#task-name').textContent
     var content=target.querySelector('#content-name').textContent
     var time=target.querySelector('.time-name').textContent
     var timecheck=target.querySelector('.timecheck').textContent
-    target.parentNode.removeChild(target);
+    // target.parentNode.removeChild(target);
+    const parentofTarget=target.closest('ul')
+    parentofTarget.removeChild(target)
     let parseTodo = JSON.parse(localStorage.getItem('todo'));
     var arrTodo=Object.values(parseTodo)
     for (var i=0; i<arrTodo.length; i++){
@@ -459,7 +463,8 @@ function deleteTaskDoing() {
     var content=target.querySelector('#content-name').textContent
     var time=target.querySelector('.time-name').textContent
     var timecheck=target.querySelector('.timecheck').textContent
-    target.parentNode.removeChild(target);
+    const parentofTarget=target.closest('ul')
+    parentofTarget.removeChild(target)
     let parseDoing = JSON.parse(localStorage.getItem('doing'));
     var arrDoing=Object.values(parseDoing)
     for (var i=0; i<arrDoing.length; i++){
@@ -551,22 +556,30 @@ function addEventforTrashbutton(){
     }
     var doingsection=document.getElementById('doing-list')
     var trashdoing = doingsection.getElementsByClassName('fa-trash-can')
-    for (var i=0; i<trashdoing.length;i++){
-        trashdoing[i].addEventListener('click',deleteTaskDoing)
-    }
+    if (trashdoing.length>=1){
+        console.log('true');
+        for (var i=0; i<trashdoing.length;i++){
+            trashdoing[i].addEventListener('click',deleteTaskDoing)
+        }
+    }  
     var finishsection=document.getElementById('finish-list')
     var trashfinish = finishsection.getElementsByClassName('fa-trash-can')
-    for (var i=0; i<trashfinish.length;i++){
-        trashfinish[i].addEventListener('click',deleteTaskFinish)
+    if (trashfinish.length>=1){
+        for (var i=0; i<trashfinish.length;i++){
+            trashfinish[i].addEventListener('click',deleteTaskFinish)
+        }
     }
     var blocksection=document.getElementById('block-list')
     var trashblock = blocksection.getElementsByClassName('fa-trash-can')
-    for (var i=0; i<trashblock.length;i++){
-        trashblock[i].addEventListener('click',deleteTaskBlock)
+    if (trashblock.length>=1){
+        for (var i=0; i<trashblock.length;i++){
+            trashblock[i].addEventListener('click',deleteTaskBlock)
+        }
     }
+
 }
 
-//render available tasks in Doing
+// render available tasks in Doing
 function renderAvailableDoingtoScreen(){
     if (localStorage.getItem('doing')!=null){
         var parseDoing=JSON.parse(localStorage.getItem('doing'))
@@ -586,6 +599,7 @@ function renderAvailableDoingtoScreen(){
     
 }
 
+
 //render available tasks in Finish
 function renderAvailableFinishtoScreen(){
     if (localStorage.getItem('finish')!==null){
@@ -594,6 +608,8 @@ function renderAvailableFinishtoScreen(){
             for(var j=0; j<parseFinish.length; j++){
                 createNoteContentinFinish()
                 document.getElementsByClassName('category-name')[j].innerHTML= parseFinish[j].category;
+                console.log(document.getElementsByClassName('category-name')[j].innerHTML);
+                console.log(parseFinish[j].category);
                 document.getElementsByClassName('task-name')[j].innerHTML= parseFinish[j].title;
                 document.getElementsByClassName('content-name')[j].innerHTML= parseFinish[j].content;
                 document.getElementsByClassName('time-name')[j].innerHTML= parseFinish[j].time;
@@ -641,15 +657,34 @@ function renderAvailableValueinEditForm(event) {
         renderCategory.value = category;
         renderTitle.value = title;
         renderContent.value = content;
-        document.getElementById('button-todo').checked=true;
+        parentOftargetEdit=targetEdit.closest('ul')
+        console.log(parentOftargetEdit);
+        if (parentOftargetEdit.id=='todolist'){
+            document.getElementById('button-todo').checked=true;
+        } else if(parentOftargetEdit.id=='doing-list'){
+            document.getElementById('button-doing').checked=true;
+        }else if(parentOftargetEdit.id=='finish-list'){
+            document.getElementById('button-finish').checked=true;
+        }else if(parentOftargetEdit.id=='block-list'){
+            document.getElementById('button-block').checked=true;
+        }
         document.getElementById('editsubmitbutton').addEventListener('click', function(){
             checkEmptyOrWhitespaceinEditForm()
             checkeditCategory,checkeditTitle,checkeditContent=checkEmptyOrWhitespaceinEditForm();
             if (checkeditCategory && checkeditTitle && checkeditContent){
                 //lay gia tri da edit thay doi trong local storage va render ket qua sau khi edit
-                getValuefromEditForminTodo(category,title,content,time,timecheck)
+                if (parentOftargetEdit.id=='todolist'){
+                    getValuefromEditForminTodo(category,title,content,time,timecheck)
+                } else if(parentOftargetEdit.id=='doing-list'){
+                    getValuefromEditForminDoing(category,title,content,time,timecheck)
+                }else if(parentOftargetEdit.id=='finish-list'){
+                    getValuefromEditForminFinish(category,title,content,time,timecheck)
+                }else if(parentOftargetEdit.id=='block-list'){
+                    getValuefromEditForminBlock(category,title,content,time,timecheck)
+                }
+
                 closeEditForm()
-                checkwhichButtonchecked(category,title,content,time,timecheck)
+                checkwhichButtonchecked(parentOftargetEdit,category,title,content,time,timecheck)
                 // console.log(1234);
                 //them function append new to new task area o day
                 }
@@ -699,7 +734,101 @@ function getValuefromEditForminTodo(category,title,content,time,timecheck){
     localStorage.setItem('todo', JSON.stringify(arrTodo));
     //doan nay them code kiem tra gia tri cua cac button
     renderResultafterEditTodo()
- 
+}
+//nhan  gia tri moi tu form sau do thay doi trong local storage va render ket qua sau khi submit
+function getValuefromEditForminDoing(category,title,content,time,timecheck){
+    var renderCategory1 = document.getElementById('edit-category');
+    var renderTitle1 = document.getElementById('edit-title');
+    var renderContent1 = document.getElementById('edit-content');
+    var renderTime=time;
+    var renderTimecheck=timecheck;
+    var editCategory=renderCategory1.value;
+    var editTitle=renderTitle1.value;
+    var editContent=renderContent1.value;
+    var editTime=new Date().toLocaleDateString('en-US',{day: 'numeric',year:'numeric',month: 'short'});
+    var editTimecheck=new Date().toLocaleDateString('en-US',{day:'numeric',year:'numeric', month:'numeric',
+    hour: 'numeric',minute: 'numeric',second:'numeric'});;
+    let parseDoing = JSON.parse(localStorage.getItem('doing'));
+    var arrDoing=Object.values(parseDoing)
+    for (var i=0; i<arrDoing.length; i++){
+        if (arrDoing[i].category == category && arrDoing[i].title==title 
+        && arrDoing[i].content==content && arrDoing[i].time ==renderTime
+        && arrDoing[i].timecheck==renderTimecheck) {
+            arrDoing[i].category=editCategory;
+            arrDoing[i].title=editTitle;
+            arrDoing[i].content=editContent;
+            arrDoing[i].time=editTime;
+            arrDoing[i].timecheck=editTimecheck;
+            position=i
+            break;
+    }}
+    localStorage.setItem('doing', JSON.stringify(arrDoing));
+    //doan nay them code kiem tra gia tri cua cac button
+    renderResultafterEditDoing()
+}
+
+//nhan  gia tri moi tu form sau do thay doi trong local storage va render ket qua sau khi submit
+function getValuefromEditForminFinish(category,title,content,time,timecheck){
+    var renderCategory1 = document.getElementById('edit-category');
+    var renderTitle1 = document.getElementById('edit-title');
+    var renderContent1 = document.getElementById('edit-content');
+    var renderTime=time;
+    var renderTimecheck=timecheck;
+    var editCategory=renderCategory1.value;
+    var editTitle=renderTitle1.value;
+    var editContent=renderContent1.value;
+    var editTime=new Date().toLocaleDateString('en-US',{day: 'numeric',year:'numeric',month: 'short'});
+    var editTimecheck=new Date().toLocaleDateString('en-US',{day:'numeric',year:'numeric', month:'numeric',
+    hour: 'numeric',minute: 'numeric',second:'numeric'});;
+    let parseFinish = JSON.parse(localStorage.getItem('finish'));
+    var arrFinish=Object.values(parseFinish)
+    for (var i=0; i<arrFinish.length; i++){
+        if (arrFinish[i].category == category && arrFinish[i].title==title 
+        && arrFinish[i].content==content && arrFinish[i].time ==renderTime
+        && arrFinish[i].timecheck==renderTimecheck) {
+            arrFinish[i].category=editCategory;
+            arrFinish[i].title=editTitle;
+            arrFinish[i].content=editContent;
+            arrFinish[i].time=editTime;
+            arrFinish[i].timecheck=editTimecheck;
+            position=i
+            break;
+    }}
+    localStorage.setItem('finish', JSON.stringify(arrFinish));
+    //doan nay them code kiem tra gia tri cua cac button
+    renderResultafterEditFinish()
+}
+
+//nhan  gia tri moi tu form sau do thay doi trong local storage va render ket qua sau khi submit
+function getValuefromEditForminBlock(category,title,content,time,timecheck){
+    var renderCategory1 = document.getElementById('edit-category');
+    var renderTitle1 = document.getElementById('edit-title');
+    var renderContent1 = document.getElementById('edit-content');
+    var renderTime=time;
+    var renderTimecheck=timecheck;
+    var editCategory=renderCategory1.value;
+    var editTitle=renderTitle1.value;
+    var editContent=renderContent1.value;
+    var editTime=new Date().toLocaleDateString('en-US',{day: 'numeric',year:'numeric',month: 'short'});
+    var editTimecheck=new Date().toLocaleDateString('en-US',{day:'numeric',year:'numeric', month:'numeric',
+    hour: 'numeric',minute: 'numeric',second:'numeric'});;
+    let parseBlock = JSON.parse(localStorage.getItem('block'));
+    var arrBlock=Object.values(parseBlock)
+    for (var i=0; i<arrBlock.length; i++){
+        if (arrBlock[i].category == category && arrBlock[i].title==title 
+        && arrBlock[i].content==content && arrBlock[i].time ==renderTime
+        && arrBlock[i].timecheck==renderTimecheck) {
+            arrBlock[i].category=editCategory;
+            arrBlock[i].title=editTitle;
+            arrBlock[i].content=editContent;
+            arrBlock[i].time=editTime;
+            arrBlock[i].timecheck=editTimecheck;
+            position=i
+            break;
+    }}
+    localStorage.setItem('block', JSON.stringify(arrBlock));
+    //doan nay them code kiem tra gia tri cua cac button
+    renderResultafterEditBlock()
 }
 //render ket qua sau khi edit ket qua
 function renderResultafterEditTodo(){
@@ -807,7 +936,7 @@ function deleteTaskinFinish(category,title,content,time,timecheck){
 }
 //function delete task in block
 function deleteTaskinBlock(category,title,content,time,timecheck){
-    let parseBlock = JSON.parse(localStorage.getItem('finish'));
+    let parseBlock = JSON.parse(localStorage.getItem('block'));
     //xoa gia tri trong local storage key todo
     var arrBlock=Object.values(parseBlock)
     for (var i=0; i<arrBlock.length; i++){
@@ -838,11 +967,7 @@ function deleteTaskinTodo(category,title,content,time,timecheck){
             break;
     }}
     var todosection=document.getElementById('todolist');
-    console.log(todosection);
     todosection.removeChild(todosection.children[position]);
-    console.log('done todosection');
-
-
     arrTodo.splice(position,1)
     localStorage.setItem('todo', JSON.stringify(arrTodo));
     updateTodocount();
@@ -864,7 +989,6 @@ function appendTasktoDoing(){
     var parseDoing = JSON.parse(localStorage.getItem('doing'));
     if (parseDoing===null){
         parseDoing=[]
-        console.log('dang null');
     } 
     const objDoing={
         'category':editCategory,
@@ -876,31 +1000,131 @@ function appendTasktoDoing(){
     parseDoing.push(objDoing);
     const setJSONKeys=JSON.stringify(parseDoing);
     localStorage.setItem('doing',setJSONKeys);
-    // renderAvailableTodotoScreen()
-    // renderAvailableDoingtoScreen()
-    appendnewTasktoDoing()
-    
-    
-
+    appendnewTasktoDoing() 
 }
-// function appendnewTasktoDoing(){
-//     const parseDoing = JSON.parse(localStorage.getItem('doing'));
-    
-// }
+//them task vao finish
+function appendTasktoFinish(){
+    //get gia tri tam tu form
+    var editCategory=document.getElementById('edit-category').value;
+    var editTitle=document.getElementById('edit-title').value;
+    var editContent=document.getElementById('edit-content').value;
+    //them moi gia tri date vi tinh theo thoi gian cap nhat
+    var editTime=new Date().toLocaleDateString('en-US',{day: 'numeric',year:'numeric',month: 'short'});
+    var editTimecheck=new Date().toLocaleDateString('en-US',{day:'numeric',year:'numeric', month:'numeric',
+    hour: 'numeric',minute: 'numeric',second:'numeric'});
+    var parseFinish = JSON.parse(localStorage.getItem('finish'));
+    if (parseFinish===null){
+        parseFinish=[]
+    } 
+    const objDoing={
+        'category':editCategory,
+        'title':editTitle,
+        'content':editContent,
+        'time':editTime,
+        'timecheck':editTimecheck,
+    };
+    parseFinish.push(objDoing);
+    const setJSONKeys=JSON.stringify(parseFinish);
+    localStorage.setItem('finish',setJSONKeys);
+    appendnewTasktoFinish() 
+}
+
+//them task vao block
+function appendTasktoBlock(){
+    //get gia tri tam tu form
+    var editCategory=document.getElementById('edit-category').value;
+    var editTitle=document.getElementById('edit-title').value;
+    var editContent=document.getElementById('edit-content').value;
+    //them moi gia tri date vi tinh theo thoi gian cap nhat
+    var editTime=new Date().toLocaleDateString('en-US',{day: 'numeric',year:'numeric',month: 'short'});
+    var editTimecheck=new Date().toLocaleDateString('en-US',{day:'numeric',year:'numeric', month:'numeric',
+    hour: 'numeric',minute: 'numeric',second:'numeric'});
+    var parseBlock = JSON.parse(localStorage.getItem('block'));
+    if (parseBlock===null){
+        parseBlock=[]
+    } 
+    const objBlock={
+        'category':editCategory,
+        'title':editTitle,
+        'content':editContent,
+        'time':editTime,
+        'timecheck':editTimecheck,
+    };
+    parseBlock.push(objBlock);
+    const setJSONKeys=JSON.stringify(parseBlock);
+    localStorage.setItem('block',setJSONKeys);
+    appendnewTasktoBlock() 
+}
+
+//them task vao todo
+function appendTasktoTodo(){
+    //get gia tri tam tu form
+    var editCategory=document.getElementById('edit-category').value;
+    var editTitle=document.getElementById('edit-title').value;
+    var editContent=document.getElementById('edit-content').value;
+    //them moi gia tri date vi tinh theo thoi gian cap nhat
+    var editTime=new Date().toLocaleDateString('en-US',{day: 'numeric',year:'numeric',month: 'short'});
+    var editTimecheck=new Date().toLocaleDateString('en-US',{day:'numeric',year:'numeric', month:'numeric',
+    hour: 'numeric',minute: 'numeric',second:'numeric'});
+    var parseTodo = JSON.parse(localStorage.getItem('todo'));
+    if (parseTodo===null){
+        parseTodo=[]
+    } 
+    const objTodo={
+        'category':editCategory,
+        'title':editTitle,
+        'content':editContent,
+        'time':editTime,
+        'timecheck':editTimecheck,
+    };
+    parseTodo.push(objTodo);
+    const setJSONKeys=JSON.stringify(parseTodo);
+    localStorage.setItem('todo',setJSONKeys);
+    appendnewTask() 
+}
+
 //function check task area 
-function checkwhichButtonchecked(category,title,content,time,timecheck){
+function checkwhichButtonchecked(parentOftargetEdit,category,title,content,time,timecheck){
     var buttontodo=document.getElementById('button-todo')
     var buttondoing=document.getElementById('button-doing')
     var buttonfinish=document.getElementById('button-finish')
     var buttonblock=document.getElementById('button-block')
-    if (buttontodo.checked==true){
-        //pass getvaluefromedittodoform()
-    }else if (buttondoing.checked==true){
+    if (parentOftargetEdit.id=='todolist'){
         deleteTaskinTodo();
-        appendTasktoDoing()
-    }else if (buttonfinish.checked==true){
-        appendTasktoFinish(category,title,content,time,timecheck)
-    }else if (buttonblock.checked==true){
-        appendTasktoBlock(category,title,content,time,timecheck)
+        if (buttondoing.checked==true){
+            appendTasktoDoing()
+        }else if (buttonfinish.checked==true){
+            appendTasktoFinish()
+        }else if (buttonblock.checked==true){
+            appendTasktoBlock();
+        }
+    } else if (parentOftargetEdit.id=='doing-list'){
+        deleteTaskinDoing();
+        if (buttontodo.checked==true){
+            appendTasktoTodo()
+        }else if (buttonfinish.checked==true){
+            appendTasktoFinish()
+        }else if (buttonblock.checked==true){
+            appendTasktoBlock();
+        }
+    } else if (parentOftargetEdit.id=='finish-list'){
+        deleteTaskinFinish();
+        if (buttontodo.checked==true){
+            appendTasktoTodo()
+        }else if (buttondoing.checked==true){
+            appendTasktoDoing()
+        }else if (buttonblock.checked==true){
+            appendTasktoBlock();
+        }
+    } else if (parentOftargetEdit.id=='block-list'){
+        deleteTaskinBlock();
+        if (buttontodo.checked==true){
+            appendTasktoTodo()
+        }else if (buttonfinish.checked==true){
+            appendTasktoFinish()
+        }else if (buttondoing.checked==true){
+            appendTasktoDoing();
+        }
     }
+    
 }
