@@ -334,7 +334,6 @@ function appendnewTask(){
 //function to append new task to doing
 function appendnewTasktoDoing(){    
     const parseDoing = JSON.parse(localStorage.getItem('doing'));
-    alert(parseDoing.length,'parseDoing')
     const latestTask = parseDoing[parseDoing.length - 1];
     createNoteContentinDoing()
     addEventforTrashbutton();
@@ -349,6 +348,7 @@ function appendnewTasktoDoing(){
     editFormButtons.forEach(function(button) {
         button.addEventListener('click', renderAvailableValueinEditForm);
     });
+
 }
 //function to append new task to finish
 function appendnewTasktoFinish(){
@@ -1092,7 +1092,7 @@ function checkwhichButtonchecked(parentOftargetEdit,category,title,content,time,
             appendnewTasktoDoing()
         }else if (buttonfinish.checked==true){
             appendTasktoFinish()
-            appendTasktoFinish()
+            appendnewTasktoFinish()
         }else if (buttonblock.checked==true){
             appendTasktoBlock();
             appendnewTasktoBlock();
@@ -1116,10 +1116,10 @@ function checkwhichButtonchecked(parentOftargetEdit,category,title,content,time,
             appendnewTask();
         }else if (buttondoing.checked==true){
             appendTasktoDoing()
-            appendTasktoDoing();
+            appendnewTasktoDoing();
         }else if (buttonblock.checked==true){
             appendTasktoBlock();
-            appendTasktoBlock();
+            appendnewTasktoBlock();
         }
     } else if (parentOftargetEdit.id=='block-list' && buttonblock.checked !=true){
         deleteTaskinBlock(category,title,content,time,timecheck);
