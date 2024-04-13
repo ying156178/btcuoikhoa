@@ -334,8 +334,8 @@ function appendnewTask(){
 //function to append new task to doing
 function appendnewTasktoDoing(){    
     const parseDoing = JSON.parse(localStorage.getItem('doing'));
+    alert(parseDoing.length,'parseDoing')
     const latestTask = parseDoing[parseDoing.length - 1];
-    console.log('dang chay');
     createNoteContentinDoing()
     addEventforTrashbutton();
     document.getElementsByClassName('category-name')[parseDoing.length -1].innerHTML= latestTask.category;
@@ -534,7 +534,6 @@ function updateTodocount(){
 function updateDoingcount(){
     var parseDoing=JSON.parse(localStorage.getItem('doing'))
     document.getElementById('doing').innerHTML=parseDoing.length
-    console.log(parseDoing.length);
 }
 //update finish count
 function updateFinishcount(){
@@ -609,7 +608,6 @@ function renderAvailableFinishtoScreen(){
                 createNoteContentinFinish()
                 document.getElementsByClassName('category-name')[j].innerHTML= parseFinish[j].category;
                 console.log(document.getElementsByClassName('category-name')[j].innerHTML);
-                console.log(parseFinish[j].category);
                 document.getElementsByClassName('task-name')[j].innerHTML= parseFinish[j].title;
                 document.getElementsByClassName('content-name')[j].innerHTML= parseFinish[j].content;
                 document.getElementsByClassName('time-name')[j].innerHTML= parseFinish[j].time;
@@ -689,7 +687,6 @@ function renderAvailableValueinEditForm(event) {
                 //them function append new to new task area o day
                 }
         })
-
     } else {
         console.error('Unable to find parent <li> element.');
     }
@@ -955,7 +952,6 @@ function deleteTaskinBlock(category,title,content,time,timecheck){
 }
 function deleteTaskinTodo(category,title,content,time,timecheck){
     let parseTodo = JSON.parse(localStorage.getItem('todo'));
-    console.log('parse',parseTodo);
     //xoa gia tri trong local storage key todo
     var arrTodo=Object.values(parseTodo)
     console.log('arr',arrTodo);
@@ -1000,7 +996,7 @@ function appendTasktoDoing(){
     parseDoing.push(objDoing);
     const setJSONKeys=JSON.stringify(parseDoing);
     localStorage.setItem('doing',setJSONKeys);
-    appendnewTasktoDoing() 
+    // appendnewTasktoDoing() 
 }
 //them task vao finish
 function appendTasktoFinish(){
@@ -1026,7 +1022,7 @@ function appendTasktoFinish(){
     parseFinish.push(objDoing);
     const setJSONKeys=JSON.stringify(parseFinish);
     localStorage.setItem('finish',setJSONKeys);
-    appendnewTasktoFinish() 
+    // appendnewTasktoFinish() 
 }
 
 //them task vao block
@@ -1053,7 +1049,7 @@ function appendTasktoBlock(){
     parseBlock.push(objBlock);
     const setJSONKeys=JSON.stringify(parseBlock);
     localStorage.setItem('block',setJSONKeys);
-    appendnewTasktoBlock() 
+    // appendnewTasktoBlock() 
 }
 
 //them task vao todo
@@ -1080,7 +1076,7 @@ function appendTasktoTodo(){
     parseTodo.push(objTodo);
     const setJSONKeys=JSON.stringify(parseTodo);
     localStorage.setItem('todo',setJSONKeys);
-    appendnewTask() 
+    // appendnewTask() 
 }
 
 //function check task area 
@@ -1089,41 +1085,53 @@ function checkwhichButtonchecked(parentOftargetEdit,category,title,content,time,
     var buttondoing=document.getElementById('button-doing')
     var buttonfinish=document.getElementById('button-finish')
     var buttonblock=document.getElementById('button-block')
-    if (parentOftargetEdit.id=='todolist'){
-        deleteTaskinTodo();
+    if (parentOftargetEdit.id=='todolist' && buttontodo.checked != true){
+        deleteTaskinTodo(category,title,content,time,timecheck);
         if (buttondoing.checked==true){
             appendTasktoDoing()
+            appendnewTasktoDoing()
         }else if (buttonfinish.checked==true){
+            appendTasktoFinish()
             appendTasktoFinish()
         }else if (buttonblock.checked==true){
             appendTasktoBlock();
+            appendnewTasktoBlock();
         }
-    } else if (parentOftargetEdit.id=='doing-list'){
-        deleteTaskinDoing();
+    } else if (parentOftargetEdit.id=='doing-list' && buttondoing.checked !=true){
+        deleteTaskinDoing(category,title,content,time,timecheck);
         if (buttontodo.checked==true){
             appendTasktoTodo()
+            appendnewTask()
         }else if (buttonfinish.checked==true){
             appendTasktoFinish()
+            appendnewTasktoFinish();
         }else if (buttonblock.checked==true){
             appendTasktoBlock();
+            appendnewTasktoBlock();
         }
-    } else if (parentOftargetEdit.id=='finish-list'){
-        deleteTaskinFinish();
+    } else if (parentOftargetEdit.id=='finish-list' && buttonfinish.checked !=true){
+        deleteTaskinFinish(category,title,content,time,timecheck);
         if (buttontodo.checked==true){
             appendTasktoTodo()
+            appendnewTask();
         }else if (buttondoing.checked==true){
             appendTasktoDoing()
+            appendTasktoDoing();
         }else if (buttonblock.checked==true){
             appendTasktoBlock();
+            appendTasktoBlock();
         }
-    } else if (parentOftargetEdit.id=='block-list'){
-        deleteTaskinBlock();
+    } else if (parentOftargetEdit.id=='block-list' && buttonblock.checked !=true){
+        deleteTaskinBlock(category,title,content,time,timecheck);
         if (buttontodo.checked==true){
             appendTasktoTodo()
+            appendnewTask();
         }else if (buttonfinish.checked==true){
             appendTasktoFinish()
+            appendnewTasktoFinish()
         }else if (buttondoing.checked==true){
             appendTasktoDoing();
+            appendnewTasktoDoing();
         }
     }
     
