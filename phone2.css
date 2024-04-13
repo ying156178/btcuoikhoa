@@ -1,0 +1,16 @@
+@media only screen and (max-width:678px){
+    div.spec{
+        display: block !important;
+    }
+    .spec-container.todo-container,
+    .spec-container.doing-container,
+    .spec-container.finish-container,
+    .spec-container.block-container{
+        width: 100% !important;
+        height: 20% !important;
+    }
+
+    .note-big-container{
+        height: 12dvh !important;
+    }
+}
